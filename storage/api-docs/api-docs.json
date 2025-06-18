@@ -1,0 +1,272 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laravel Cinema API",
+    "description": "Dokumentasi API untuk login, manajemen bioskop, film, dan jadwal.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "paths": {
+    "/api/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "example": "user@example.com" },
+                  "password": { "type": "string", "example": "password123" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login berhasil" },
+          "401": { "description": "Login gagal" }
+        }
+      }
+    },
+
+    "/api/theaters": {
+      "get": {
+        "tags": ["Theaters"],
+        "summary": "Ambil semua theater",
+        "responses": {
+          "200": {
+            "description": "Daftar theater",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Theater" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Theaters"],
+        "summary": "Buat theater baru",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Theater" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Theater dibuat" } }
+      }
+    },
+    "/api/theaters/{id}": {
+      "get": {
+        "tags": ["Theaters"],
+        "summary": "Lihat detail theater",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "Data theater" } }
+      },
+      "put": {
+        "tags": ["Theaters"],
+        "summary": "Update theater",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Theater" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Theater diperbarui" } }
+      },
+      "delete": {
+        "tags": ["Theaters"],
+        "summary": "Hapus theater",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "204": { "description": "Theater dihapus" } }
+      }
+    },
+
+    "/api/movies": {
+      "get": {
+        "tags": ["Movies"],
+        "summary": "Ambil semua film",
+        "responses": {
+          "200": {
+            "description": "Daftar film",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Movie" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Movies"],
+        "summary": "Buat film baru",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Movie" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Film dibuat" } }
+      }
+    },
+    "/api/movies/{id}": {
+      "get": {
+        "tags": ["Movies"],
+        "summary": "Lihat detail film",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "Data film" } }
+      },
+      "put": {
+        "tags": ["Movies"],
+        "summary": "Update film",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Movie" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Film diperbarui" } }
+      },
+      "delete": {
+        "tags": ["Movies"],
+        "summary": "Hapus film",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "204": { "description": "Film dihapus" } }
+      }
+    },
+
+    "/api/showtimes": {
+      "get": {
+        "tags": ["Showtimes"],
+        "summary": "Ambil semua showtime",
+        "responses": {
+          "200": {
+            "description": "Daftar showtime",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Showtime" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Showtimes"],
+        "summary": "Buat showtime baru",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Showtime" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Showtime dibuat" } }
+      }
+    },
+    "/api/showtimes/{id}": {
+      "get": {
+        "tags": ["Showtimes"],
+        "summary": "Lihat detail showtime",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "Data showtime" } }
+      },
+      "put": {
+        "tags": ["Showtimes"],
+        "summary": "Update showtime",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Showtime" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Showtime diperbarui" } }
+      },
+      "delete": {
+        "tags": ["Showtimes"],
+        "summary": "Hapus showtime",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "204": { "description": "Showtime dihapus" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Theater": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Cinema XXI" },
+          "capacity": { "type": "integer", "example": 150 },
+          "type": {
+            "type": "string",
+            "enum": ["regular", "imax", "vip", "4dx"],
+            "example": "imax"
+          },
+          "facilities": { "type": "string", "example": "AC, Dolby Atmos" },
+          "is_active": { "type": "boolean", "example": true }
+        }
+      },
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "example": "The Matrix" },
+          "description": { "type": "string", "example": "Film aksi fiksi ilmiah." },
+          "duration": { "type": "integer", "example": 120 },
+          "genre": { "type": "string", "example": "Action" },
+          "rating": { "type": "number", "format": "float", "example": 8.7 }
+        }
+      },
+      "Showtime": {
+        "type": "object",
+        "properties": {
+          "movie_id": { "type": "integer", "example": 1 },
+          "theater_id": { "type": "integer", "example": 2 },
+          "start_time": { "type": "string", "format": "date-time", "example": "2025-06-17T14:00:00Z" },
+          "price": { "type": "number", "format": "float", "example": 45000 }
+        }
+      }
+    }
+  }
+}
